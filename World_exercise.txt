@@ -1,0 +1,288 @@
+1.	Using COUNT, get the number of cities in the USA.
+4079
+2.	Find out what the population and average life expectancy for people in Argentina (ARG) is.
+Argentina population = 37032000
+Argentina life expectancy = 75.1
+3.	Using IS NOT NULL, ORDER BY, LIMIT, what country has the highest life expectancy?
+Andorra – 83.5
+SELECT * FROM COUNTRY
+WHERE LifeExpectancy IS NOT NULL
+ORDER BY LifeExpectancy DESC
+LIMIT 1
+4.
+Madrid
+USE world;
+SELECT t1.Code, t1.Name as Country, t2.Name as Capital
+FROM country t1
+JOIN city t2
+ON t1.Capital = t2.ID
+WHERE Code = 'ESP'
+
+5. 
+# Region, Language
+'Southeast Asia', 'Chinese'
+'Southeast Asia', 'English'
+'Southeast Asia', 'Malay'
+'Southeast Asia', 'Malay-English'
+'Southeast Asia', 'Bali'
+'Southeast Asia', 'Banja'
+'Southeast Asia', 'Batakki'
+'Southeast Asia', 'Bugi'
+'Southeast Asia', 'Javanese'
+'Southeast Asia', 'Madura'
+'Southeast Asia', 'Minangkabau'
+'Southeast Asia', 'Sunda'
+'Southeast Asia', 'Khmer'
+'Southeast Asia', 'Tšam'
+'Southeast Asia', 'Vietnamese'
+'Southeast Asia', 'Lao'
+'Southeast Asia', 'Lao-Soung'
+'Southeast Asia', 'Mon-khmer'
+'Southeast Asia', 'Thai'
+'Southeast Asia', 'Burmese'
+'Southeast Asia', 'Chin'
+'Southeast Asia', 'Kachin'
+'Southeast Asia', 'Karen'
+'Southeast Asia', 'Kayah'
+'Southeast Asia', 'Mon'
+'Southeast Asia', 'Rakhine'
+'Southeast Asia', 'Shan'
+'Southeast Asia', 'Dusun'
+'Southeast Asia', 'Iban'
+'Southeast Asia', 'Tamil'
+'Southeast Asia', 'Bicol'
+'Southeast Asia', 'Cebuano'
+'Southeast Asia', 'Hiligaynon'
+'Southeast Asia', 'Ilocano'
+'Southeast Asia', 'Maguindanao'
+'Southeast Asia', 'Maranao'
+'Southeast Asia', 'Pampango'
+'Southeast Asia', 'Pangasinan'
+'Southeast Asia', 'Pilipino'
+'Southeast Asia', 'Waray-waray'
+'Southeast Asia', 'Kuy'
+'Southeast Asia', 'Portuguese'
+'Southeast Asia', 'Man'
+'Southeast Asia', 'Miao'
+'Southeast Asia', 'Muong'
+'Southeast Asia', 'Nung'
+'Southeast Asia', 'Tho'
+select DISTINCT t1.Region, t2.Language from country t1
+join countrylanguage t2
+on t1.Code = t2.CountryCode
+where Region = 'Southeast Asia'
+6.
+select Name FROM city 
+where Name LIKE 'F%'
+limit 25
+# Name
+'Fagatogo'
+'Florencio Varela'
+'Formosa'
+'Francistown'
+'Fortaleza'
+'Feira de Santana'
+'Franca'
+'Florianópolis'
+'Foz do Iguaçu'
+'Ferraz de Vasconcelos'
+'Francisco Morato'
+'Franco da Rocha'
+'Fuenlabrada'
+'Faridabad'
+'Firozabad'
+'Farrukhabad-cum-Fatehgarh'
+'Faizabad'
+'Fatehpur'
+'Firenze'
+'Foggia'
+'Ferrara'
+'Forlì'
+'Fukuoka'
+'Funabashi'
+'Fukuyama'
+
+7.
+Number of cities in china = '363'
+select COUNT(ID) FROM city 
+WHERE CountryCode = 'CHN'
+
+8.
+Lowest population = Antarctica, 0 
+select * FROM country 
+WHERE Population is not null
+ORDER BY Population ASC
+LIMIT 1
+9.
+Number of countries in the database: '239'
+select count(DISTINCT Name) FROM country
+10. 
+What are the top 10 largest countries by population?
+'China', '1277558000'
+'India', '1013662000'
+'United States', '278357000'
+'Indonesia', '212107000'
+'Brazil', '170115000'
+'Pakistan', '156483000'
+'Russian Federation', '146934000'
+'Bangladesh', '129155000'
+'Japan', '126714000'
+'Nigeria', '111506000'
+select Name, Population FROM country 
+ORDER BY Population DESC
+LIMIT 10
+
+
+11.	List the top five largest cities in Japan.
+# Name, Population
+'Tokyo', '7980230'
+'Jokohama [Yokohama]', '3339594'
+'Osaka', '2595674'
+'Nagoya', '2154376'
+'Sapporo', '1790886'
+
+select Name, Population FROM city
+WHERE CountryCode = 'JPN'
+ORDER BY Population DESC
+LIMIT 5
+
+12.	List the names and country codes of every country which has Elizabeth II as its Head of State.
+'Anguilla', 'AIA', 'Elisabeth II'
+'Antigua and Barbuda', 'ATG', 'Elisabeth II'
+'Australia', 'AUS', 'Elisabeth II'
+'Bahamas', 'BHS', 'Elisabeth II'
+'Belize', 'BLZ', 'Elisabeth II'
+'Bermuda', 'BMU', 'Elisabeth II'
+'Barbados', 'BRB', 'Elisabeth II'
+'Canada', 'CAN', 'Elisabeth II'
+'Cocos (Keeling) Islands', 'CCK', 'Elisabeth II'
+'Cook Islands', 'COK', 'Elisabeth II'
+'Christmas Island', 'CXR', 'Elisabeth II'
+'Cayman Islands', 'CYM', 'Elisabeth II'
+'Falkland Islands', 'FLK', 'Elisabeth II'
+'United Kingdom', 'GBR', 'Elisabeth II'
+'Gibraltar', 'GIB', 'Elisabeth II'
+'Grenada', 'GRD', 'Elisabeth II'
+'Heard Island and McDonald Islands', 'HMD', 'Elisabeth II'
+'British Indian Ocean Territory', 'IOT', 'Elisabeth II'
+'Jamaica', 'JAM', 'Elisabeth II'
+'Saint Kitts and Nevis', 'KNA', 'Elisabeth II'
+'Saint Lucia', 'LCA', 'Elisabeth II'
+'Montserrat', 'MSR', 'Elisabeth II'
+'Norfolk Island', 'NFK', 'Elisabeth II'
+'Niue', 'NIU', 'Elisabeth II'
+'New Zealand', 'NZL', 'Elisabeth II'
+'Pitcairn', 'PCN', 'Elisabeth II'
+'Papua New Guinea', 'PNG', 'Elisabeth II'
+'South Georgia and the South Sandwich Islands', 'SGS', 'Elisabeth II'
+'Saint Helena', 'SHN', 'Elisabeth II'
+'Solomon Islands', 'SLB', 'Elisabeth II'
+'Turks and Caicos Islands', 'TCA', 'Elisabeth II'
+'Tokelau', 'TKL', 'Elisabeth II'
+'Tuvalu', 'TUV', 'Elisabeth II'
+'Saint Vincent and the Grenadines', 'VCT', 'Elisabeth II'
+'Virgin Islands, British', 'VGB', 'Elisabeth II'
+
+select Name, Code, HeadOfState FROM country
+where lower(HeadOfState) LIKE '%elisabeth ii%'
+AND Name IS NOT NULL;
+
+13.	List the top ten countries which have the smallest population-to-area ratio.
+# Name, Ratio
+'Antarctica', '0.0000'
+'Bouvet Island', '0.0000'
+'South Georgia and the South Sandwich Islands', '0.0000'
+'British Indian Ocean Territory', '0.0000'
+'Heard Island and McDonald Islands', '0.0000'
+'United States Minor Outlying Islands', '0.0000'
+'French Southern territories', '0.0000'
+'Greenland', '0.0259'
+'Svalbard and Jan Mayen', '0.0513'
+'Falkland Islands', '0.1643'
+
+select Name, Population / SurfaceArea as Ratio FROM country
+ORDER BY Ratio ASC
+LIMIT 10;
+
+14.	List every unique world language, according to the World database.
+SELECT DISTINCT lower(Language) FROM countrylanguage
+457 rows returned
+
+15.	What are the top 10 richest countries by GDP?
+SELECT Name, GNP FROM country
+ORDER BY GNP DESC
+LIMIT 10
+
+'United States', '8510700.00'
+'Japan', '3787042.00'
+'Germany', '2133367.00'
+'France', '1424285.00'
+'United Kingdom', '1378330.00'
+'Italy', '1161755.00'
+'China', '982268.00'
+'Brazil', '776739.00'
+'Canada', '598862.00'
+'Spain', '553233.00'
+
+
+
+16.	What are the top 10 largest countries by surface area?
+# Name, SurfaceArea
+'Russian Federation', '17075400.00'
+'Antarctica', '13120000.00'
+'Canada', '9970610.00'
+'China', '9572900.00'
+'United States', '9363520.00'
+'Brazil', '8547403.00'
+'Australia', '7741220.00'
+'India', '3287263.00'
+'Argentina', '2780400.00'
+'Kazakstan', '2724900.00'
+
+SELECT Name, SurfaceArea FROM country
+ORDER BY SurfaceArea DESC
+LIMIT 10
+
+17.	List every country where over 50% of its population can speak French.
+# Name, Language, Percentage
+'France', 'French', '93.6'
+
+SELECT t2.Name, t1.Language, t1.Percentage from countrylanguage t1
+JOIN country t2
+ON t1.CountryCode = t2.Code
+WHERE Language = 'French' 
+AND Percentage > 50
+
+18.	Which country has the worst life expectancy?
+# Name, LifeExpectancy
+'Zambia', '37.2'
+
+SELECT Name, LifeExpectancy FROM country
+WHERE LifeExpectancy IS NOT NULL
+ORDER BY LifeExpectancy ASC
+LIMIT 1
+
+19.	What is the most common government form?
+# GovernmentForm, Count
+'Republic', '122'
+'Constitutional Monarchy', '29'
+'Federal Republic', '15'
+'Dependent Territory of the UK', '12'
+'Monarchy', '5'
+'Overseas Department of France', '4'
+'Territory of Australia', '4'
+'Constitutional Monarchy, Federation', '4'
+'Nonmetropolitan Territory of France', '4'
+'US Territory', '3'
+
+SELECT GovernmentForm, count(GovernmentForm) as Count 
+FROM country
+GROUP BY GovernmentForm
+ORDER BY Count DESC
+LIMIT 10;
+
+20.	How many countries have gained independence since records began?
+192
+SELECT count(name) FROM country
+WHERE IndepYear IS NOT NULL
+
