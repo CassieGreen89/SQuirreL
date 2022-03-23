@@ -1,0 +1,305 @@
+1.	Select all Actors from the table. 
+SELECT concat_ws(" ", first_name, last_name) as actor FROM actor
+
+200 rows returned
+
+2. Find the actor with the first name “John”. 
+JOHN SUVARI
+
+SELECT * FROM actor
+WHERE first_name = "JOHN"
+
+3. Find all actors with the surname “Neeson”. 
+# actor_id, first_name, last_name, last_update
+'61', 'CHRISTIAN', 'NEESON', '2006-02-15 04:34:33'
+'62', 'JAYNE', 'NEESON', '2006-02-15 04:34:33'
+
+SELECT * FROM actor
+WHERE lower(last_name) = "neeson"
+
+4. Find all actors with Id numbers divisible by 10. 
+'10', 'CHRISTIAN', 'GABLE'
+'20', 'LUCILLE', 'TRACY'
+'30', 'SANDRA', 'PECK'
+'40', 'JOHNNY', 'CAGE'
+'50', 'NATALIE', 'HOPKINS'
+'60', 'HENRY', 'BERRY'
+'70', 'MICHELLE', 'MCCONAUGHEY'
+'80', 'RALPH', 'CRUZ'
+'90', 'SEAN', 'GUINESS'
+'100', 'SPENCER', 'DEPP'
+'110', 'SUSAN', 'DAVIS'
+'120', 'PENELOPE', 'MONROE'
+'130', 'GRETA', 'KEITEL'
+'140', 'WHOOPI', 'HURT'
+'150', 'JAYNE', 'NOLTE'
+'160', 'CHRIS', 'DEPP'
+'170', 'MENA', 'HOPPER'
+'180', 'JEFF', 'SILVERSTONE'
+'190', 'AUDREY', 'BAILEY'
+'200', 'THORA', 'TEMPLE'
+
+SELECT first_name, last_name FROM actor
+WHERE actor_id % 10 = 0
+
+5. What is the description of the movie with ID of 100? 
+'A Beautiful Drama of a Dentist And a Composer who must Battle a Sumo Wrestler in The First Manned Space Station'
+
+SELECT description FROM film 
+WHERE film_id = 100
+
+6. Find every movie with a rating of “R”. 
+195 rows returned - examples include:
+# title, rating
+'AIRPORT POLLOCK', 'R'
+'ALONE TRIP', 'R'
+'AMELIE HELLFIGHTERS', 'R'
+'AMERICAN CIRCUS', 'R'
+'ANACONDA CONFESSIONS', 'R'
+'ANALYZE HOOSIERS', 'R'
+'ANYTHING SAVANNAH', 'R'
+'APOCALYPSE FLAMINGOS', 'R'
+
+SELECT title, rating FROM film 
+WHERE upper(rating) = 'R'
+
+7. Find every movie except those with a rating of “R”. 
+805 rows returned. Examples include:
+# title, rating
+'ACADEMY DINOSAUR', 'PG'
+'ACE GOLDFINGER', 'G'
+'ADAPTATION HOLES', 'NC-17'
+'AFFAIR PREJUDICE', 'G'
+'AFRICAN EGG', 'G'
+'AGENT TRUMAN', 'PG'
+'AIRPLANE SIERRA', 'PG-13'
+'ALABAMA DEVIL', 'PG-13'
+
+SELECT title, rating FROM film 
+WHERE upper(rating) <> 'R'
+
+8. Find the 10 shortest movies. 
+Note that the 10 shortest movies had durations of 46 or 47, however there were
+more than 10 movies with a duration of 46 or 47.
+# title, length
+'ALIEN CENTER', '46'
+'IRON MOON', '46'
+'KWAI HOMEWARD', '46'
+'LABYRINTH LEAGUE', '46'
+'RIDGEMONT SUBMARINE', '46'
+'DIVORCE SHINING', '47'
+'DOWNHILL ENOUGH', '47'
+'HALLOWEEN NUTS', '47'
+'HANOVER GALAXY', '47'
+'HAWK CHILL', '47'
+'SHANGHAI TYCOON', '47'
+'SUSPECTS QUILLS', '47'
+
+SELECT title, length FROM film 
+WHERE length IS NOT NULL
+AND length <= 47
+ORDER BY length ASC
+
+9. Now return only the movie titles. 
+1000 rows returned. Examples include:
+# title
+'ACADEMY DINOSAUR'
+'ACE GOLDFINGER'
+'ADAPTATION HOLES'
+'AFFAIR PREJUDICE'
+'AFRICAN EGG'
+'AGENT TRUMAN'
+'AIRPLANE SIERRA'
+'AIRPORT POLLOCK'
+
+SELECT title FROM film;
+
+10. Find all movies with Deleted Scenes. 
+503 rows returned. Examples include:
+# title, special_features
+'ACADEMY DINOSAUR', 'Deleted Scenes,Behind the Scenes'
+'ACE GOLDFINGER', 'Trailers,Deleted Scenes'
+'ADAPTATION HOLES', 'Trailers,Deleted Scenes'
+'AFRICAN EGG', 'Deleted Scenes'
+'AGENT TRUMAN', 'Deleted Scenes'
+'AIRPLANE SIERRA', 'Trailers,Deleted Scenes'
+'ALABAMA DEVIL', 'Trailers,Deleted Scenes'
+'ALADDIN CALENDAR', 'Trailers,Deleted Scenes'
+'ALASKA PHANTOM', 'Commentaries,Deleted Scenes'
+
+SELECT title, special_features FROM film
+WHERE lower(special_features) LIKE "%deleted scenes%";
+
+11. Which last names are not repeated? 
+66 rows returned. 
+# last_name, ln_count
+'ASTAIRE', '1'
+'BACALL', '1'
+'BALE', '1'
+'BALL', '1'
+'BARRYMORE', '1'
+'BASINGER', '1'
+'BERGEN', '1'
+'BERGMAN', '1'
+'BIRCH', '1'
+'BLOOM', '1'
+'BRIDGES', '1'
+'BULLOCK', '1'
+'CARREY', '1'
+'CHAPLIN', '1'
+'CLOSE', '1'
+'COSTNER', '1'
+'CROWE', '1'
+'CRUISE', '1'
+'CRUZ', '1'
+'DAMON', '1'
+'DAY-LEWIS', '1'
+'DERN', '1'
+'DREYFUSS', '1'
+'DUNST', '1'
+'GABLE', '1'
+'GIBSON', '1'
+'GOLDBERG', '1'
+'GRANT', '1'
+'HAWKE', '1'
+'HESTON', '1'
+'HOPE', '1'
+'HUDSON', '1'
+'HUNT', '1'
+'HURT', '1'
+'JOLIE', '1'
+'JOVOVICH', '1'
+'LEIGH', '1'
+'LOLLOBRIGIDA', '1'
+'MALDEN', '1'
+'MANSFIELD', '1'
+'MARX', '1'
+'MCDORMAND', '1'
+'MIRANDA', '1'
+'NICHOLSON', '1'
+'PESCI', '1'
+'PFEIFFER', '1'
+'PHOENIX', '1'
+'PINKETT', '1'
+'PITT', '1'
+'POSEY', '1'
+'PRESLEY', '1'
+'REYNOLDS', '1'
+'RYDER', '1'
+'SINATRA', '1'
+'SOBIESKI', '1'
+'STALLONE', '1'
+'SUVARI', '1'
+'SWANK', '1'
+'TAUTOU', '1'
+'TOMEI', '1'
+'VOIGHT', '1'
+'WALKEN', '1'
+'WAYNE', '1'
+'WILSON', '1'
+'WITHERSPOON', '1'
+'WRAY', '1'
+
+SELECT * FROM
+(SELECT last_name, count(last_name) as ln_count FROM actor 
+GROUP BY last_name) as t1
+WHERE t1.ln_count = 1
+
+12. Which last names appear more than once? 
+55  rows returned:
+# last_name, ln_count
+'AKROYD', '3'
+'ALLEN', '3'
+'BAILEY', '2'
+'BENING', '2'
+'BERRY', '3'
+'BOLGER', '2'
+'BRODY', '2'
+'CAGE', '2'
+'CHASE', '2'
+'CRAWFORD', '2'
+'CRONYN', '2'
+'DAVIS', '3'
+'DEAN', '2'
+'DEE', '2'
+'DEGENERES', '3'
+'DENCH', '2'
+'DEPP', '2'
+'DUKAKIS', '2'
+'FAWCETT', '2'
+'GARLAND', '3'
+'GOODING', '2'
+'GUINESS', '3'
+'HACKMAN', '2'
+'HARRIS', '3'
+'HOFFMAN', '3'
+'HOPKINS', '3'
+'HOPPER', '2'
+'JACKMAN', '2'
+'JOHANSSON', '3'
+'KEITEL', '3'
+'KILMER', '5'
+'MCCONAUGHEY', '2'
+'MCKELLEN', '2'
+'MCQUEEN', '2'
+'MONROE', '2'
+'MOSTEL', '2'
+'NEESON', '2'
+'NOLTE', '4'
+'OLIVIER', '2'
+'PALTROW', '2'
+'PECK', '3'
+'PENN', '2'
+'SILVERSTONE', '2'
+'STREEP', '2'
+'TANDY', '2'
+'TEMPLE', '4'
+'TORN', '3'
+'TRACY', '2'
+'WAHLBERG', '2'
+'WEST', '2'
+'WILLIAMS', '3'
+'WILLIS', '3'
+'WINSLET', '2'
+'WOOD', '2'
+'ZELLWEGER', '3'
+
+SELECT * FROM
+(SELECT last_name, count(last_name) as ln_count FROM actor 
+GROUP BY last_name) as t1
+WHERE t1.ln_count > 1
+
+13. Which actor has appeared in the most films? 
+
+
+14. Is ‘Academy Dinosaur’ available for rent from Store 1? 
+
+15. When is ‘Academy Dinosaur’ due? 
+
+16. What is that average running time of all the films in the database? 
+
+17. What is the average running time of films by category? 
+
+18. How many movies have Robots in them? 
+
+19. Find the movie(s) with the longest runtime. 
+
+20. Count how many movies were released in 2010. 
+
+21. Find the titles of all horror movies. 
+
+22. Return the full name of the staff member – in a column named full_name – with the ID of 1. 
+
+23. Retrieve all movies that Fred Costner has appeared in. 
+
+24. Find out which location has the most copies of BUCKET BROTHERHOOD. 
+
+25. How many distinct countries are there? 
+
+26. What are the names of all the languages in the database (sorted alphabetically)? 
+
+27. Return the full names (first and last) of actors with “son” in their last name, ordered by their first name. 
+
+28. Create a list of categories and the number of films for each category. 
+
+29. Create a list of actors and the number of movies by each actor. 
