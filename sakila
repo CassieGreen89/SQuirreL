@@ -270,29 +270,226 @@ GROUP BY last_name) as t1
 WHERE t1.ln_count > 1
 
 13. Which actor has appeared in the most films? 
+# actor, film_count
+'SUSAN DAVIS', '54'
 
+SELECT concat_ws(" ", t2.first_name, t2.last_name) as actor, count(t1.film_id) as film_count FROM film_actor t1
+JOIN actor t2
+ON t1.actor_id = t2.actor_id
+GROUP BY actor
+ORDER BY film_count DESC
+LIMIT 1;
 
 14. Is ‘Academy Dinosaur’ available for rent from Store 1? 
+Yes, Academy Dinosaur is in the inventory
+
+SELECT * FROM inventory t1
+JOIN film t2
+ON t1.film_id = t2.film_id 
+WHERE t1.store_id = 1
+AND t2.title = 'ACADEMY DINOSAUR'
 
 15. When is ‘Academy Dinosaur’ due? 
+Academy dinosaur is due to be returned 
+# film_id, store_id, title, rental_date, return_date
+'1', '1', 'ACADEMY DINOSAUR', '2005-08-21 21:27:43', '2005-08-30 22:26:43'
+
+SELECT t3.film_id, t3.store_id, t3.title, t4.rental_date, t4.return_date FROM
+(SELECT t1.film_id, t1.store_id, t1.inventory_id, t2.title FROM inventory t1
+JOIN film t2
+ON t1.film_id = t2.film_id 
+WHERE t1.store_id = 1
+AND t2.title = 'ACADEMY DINOSAUR') t3
+JOIN rental t4
+ON t3.inventory_id = t4.inventory_id
+ORDER BY return_date DESC;
 
 16. What is that average running time of all the films in the database? 
+'115.2720'
+
+SELECT AVG(length) as avg_runtime FROM film
 
 17. What is the average running time of films by category? 
+# category, avg_runtime
+'Action', '111.6094'
+'Animation', '111.0152'
+'Children', '109.8000'
+'Classics', '111.6667'
+'Comedy', '115.8276'
+'Documentary', '108.7500'
+'Drama', '120.8387'
+'Family', '114.7826'
+'Foreign', '121.6986'
+'Games', '127.8361'
+'Horror', '112.4821'
+'Music', '113.6471'
+'New', '111.1270'
+'Sci-Fi', '108.1967'
+'Sports', '128.2027'
+'Travel', '113.3158'
+
+SELECT name as category, avg_runtime FROM
+(SELECT t2.category_id, AVG(length) as avg_runtime FROM film t1
+JOIN film_category t2
+ON t1.film_id = t2.film_id
+GROUP BY t2.category_id) t3
+LEFT JOIN category t4
+ON t3.category_id = t4.category_id
 
 18. How many movies have Robots in them? 
+77
+
+SELECT count(film_id) FROM film
+WHERE lower(description) LIKE '%robot%';
 
 19. Find the movie(s) with the longest runtime. 
+# title, length
+'CHICAGO NORTH', '185'
+'CONTROL ANTHEM', '185'
+'DARN FORRESTER', '185'
+'GANGS PRIDE', '185'
+'HOME PITY', '185'
+'MUSCLE BRIGHT', '185'
+'POND SEATTLE', '185'
+'SOLDIERS EVOLUTION', '185'
+'SWEET BROTHERHOOD', '185'
+'WORST BANGER', '185'
+
+SELECT title, length FROM film
+ORDER BY length DESC;
 
 20. Count how many movies were released in 2010. 
+0
+
+SELECT count(film_id) FROM film 
+WHERE release_year = 2010;
 
 21. Find the titles of all horror movies. 
 
+# category, title
+'Horror', 'ACE GOLDFINGER'
+'Horror', 'AFFAIR PREJUDICE'
+'Horror', 'AIRPORT POLLOCK'
+'Horror', 'ALABAMA DEVIL'
+'Horror', 'ALI FOREVER'
+'Horror', 'ANALYZE HOOSIERS'
+'Horror', 'ANYTHING SAVANNAH'
+'Horror', 'ARABIA DOGMA'
+'Horror', 'ARACHNOPHOBIA ROLLERCOASTER'
+'Horror', 'BEHAVIOR RUNAWAY'
+'Horror', 'BOWFINGER GABLES'
+'Horror', 'CARRIE BUNCH'
+'Horror', 'COMMANDMENTS EXPRESS'
+'Horror', 'DESERT POSEIDON'
+'Horror', 'DRUMS DYNAMITE'
+'Horror', 'EGYPT TENENBAUMS'
+'Horror', 'ELEPHANT TROJAN'
+'Horror', 'FAMILY SWEET'
+'Horror', 'FIDELITY DEVIL'
+'Horror', 'FREDDY STORM'
+'Horror', 'GASLIGHT CRUSADE'
+'Horror', 'HIGH ENCINO'
+'Horror', 'JAPANESE RUN'
+'Horror', 'KARATE MOON'
+'Horror', 'KENTUCKIAN GIANT'
+'Horror', 'LADY STAGE'
+'Horror', 'LOLA AGENT'
+'Horror', 'LOVE SUICIDES'
+'Horror', 'MONTEREY LABYRINTH'
+'Horror', 'MOTIONS DETAILS'
+'Horror', 'PANIC CLUB'
+'Horror', 'PARIS WEEKEND'
+'Horror', 'PATTON INTERVIEW'
+'Horror', 'PULP BEVERLY'
+'Horror', 'REAP UNFAITHFUL'
+'Horror', 'REEF SALUTE'
+'Horror', 'ROCK INSTINCT'
+'Horror', 'ROLLERCOASTER BRINGING'
+'Horror', 'RULES HUMAN'
+'Horror', 'SIMON NORTH'
+'Horror', 'SINNERS ATLANTIS'
+'Horror', 'SLEEPING SUSPECTS'
+'Horror', 'SPIRIT FLINTSTONES'
+'Horror', 'STRANGERS GRAFFITI'
+'Horror', 'STREETCAR INTENTIONS'
+'Horror', 'SWARM GOLD'
+'Horror', 'TARZAN VIDEOTAPE'
+'Horror', 'TEMPLE ATTRACTION'
+'Horror', 'TEXAS WATCH'
+'Horror', 'TRAIN BUNCH'
+'Horror', 'TREASURE COMMAND'
+'Horror', 'UNDEFEATED DALMATIONS'
+'Horror', 'WATERSHIP FRONTIER'
+'Horror', 'WORLD LEATHERNECKS'
+'Horror', 'YENTL IDAHO'
+'Horror', 'ZHIVAGO CORE'
+
+SELECT t4.name as category, t3.title FROM
+(SELECT t1.film_id, t1.title, t2.category_id FROM film t1
+JOIN film_category t2
+ON t1.film_id = t2.film_id) t3
+LEFT JOIN category t4
+ON t3.category_id = t4.category_id
+WHERE t4.name = 'Horror'
+
 22. Return the full name of the staff member – in a column named full_name – with the ID of 1. 
+# full_name
+'Mike Hillyer'
+
+SELECT name as full_name FROM STAFF_LIST
+WHERE ID = 1;
 
 23. Retrieve all movies that Fred Costner has appeared in. 
+# fullname, title
+'FRED COSTNER', 'BLANKET BEVERLY'
+'FRED COSTNER', 'BOONDOCK BALLROOM'
+'FRED COSTNER', 'BROTHERHOOD BLANKET'
+'FRED COSTNER', 'CAROL TEXAS'
+'FRED COSTNER', 'CLEOPATRA DEVIL'
+'FRED COSTNER', 'CONNECTICUT TRAMP'
+'FRED COSTNER', 'DECEIVER BETRAYED'
+'FRED COSTNER', 'DELIVERANCE MULHOLLAND'
+'FRED COSTNER', 'EAGLES PANKY'
+'FRED COSTNER', 'EARRING INSTINCT'
+'FRED COSTNER', 'EASY GLADIATOR'
+'FRED COSTNER', 'EMPIRE MALKOVICH'
+'FRED COSTNER', 'ENTRAPMENT SATISFACTION'
+'FRED COSTNER', 'GABLES METROPOLIS'
+'FRED COSTNER', 'HUMAN GRAFFITI'
+'FRED COSTNER', 'IMAGE PRINCESS'
+'FRED COSTNER', 'IMPOSSIBLE PREJUDICE'
+'FRED COSTNER', 'INCH JET'
+'FRED COSTNER', 'KRAMER CHOCOLATE'
+'FRED COSTNER', 'MAGNIFICENT CHITTY'
+'FRED COSTNER', 'MIRACLE VIRTUAL'
+'FRED COSTNER', 'MISSION ZOOLANDER'
+'FRED COSTNER', 'REAR TRADING'
+'FRED COSTNER', 'SAINTS BRIDE'
+'FRED COSTNER', 'SENSE GREEK'
+'FRED COSTNER', 'THEORY MERMAID'
+'FRED COSTNER', 'WEEKEND PERSONAL'
+
+SELECT t4.fullname, t4.title FROM
+(SELECT t1.actor_id, concat_ws(" ", first_name, last_name) as fullname, t2.film_id, t3.title FROM actor t1
+JOIN film_actor t2
+ON t1.actor_id = t2.actor_id
+JOIN film t3
+ON t3.film_id = t2.film_id
+WHERE first_name = 'FRED' AND last_name = 'COSTNER') t4;
 
 24. Find out which location has the most copies of BUCKET BROTHERHOOD. 
+
+# store_id, count(t2.title)
+'1', '4'
+'2', '4'
+
+
+SELECT t1.store_id, count(t2.title) FROM inventory t1
+JOIN film t2
+ON t1.film_id = t2.film_id
+WHERE title = 'BUCKET BROTHERHOOD'
+GROUP BY t1.store_id;
+
 
 25. How many distinct countries are there? 
 
