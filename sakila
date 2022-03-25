@@ -483,6 +483,7 @@ WHERE first_name = 'FRED' AND last_name = 'COSTNER') t4;
 '1', '4'
 '2', '4'
 
+Both locations 1 and two have 4 copies of bucket brotherhood
 
 SELECT t1.store_id, count(t2.title) FROM inventory t1
 JOIN film t2
@@ -490,12 +491,38 @@ ON t1.film_id = t2.film_id
 WHERE title = 'BUCKET BROTHERHOOD'
 GROUP BY t1.store_id;
 
-
 25. How many distinct countries are there? 
+109
+
+SELECT count(DISTINCT(country)) FROM country;
 
 26. What are the names of all the languages in the database (sorted alphabetically)? 
+# name
+'English'
+'French'
+'German'
+'Italian'
+'Japanese'
+'Mandarin'
+
+SELECT name FROM language
+ORDER by name ASC;
 
 27. Return the full names (first and last) of actors with “son” in their last name, ordered by their first name. 
+# full_name
+'ALBERT JOHANSSON'
+'ANGELA HUDSON'
+'BETTE NICHOLSON'
+'CHRISTIAN NEESON'
+'JAYNE NEESON'
+'MATTHEW JOHANSSON'
+'MERYL GIBSON'
+'RAY JOHANSSON'
+'WILL WILSON'
+
+SELECT concat_ws(" ", first_name, last_name) as full_name FROM actor
+WHERE upper(last_name) LIKE '%SON%'
+ORDER BY first_name ASC;
 
 28. Create a list of categories and the number of films for each category. 
 
