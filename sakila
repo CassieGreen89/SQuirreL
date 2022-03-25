@@ -525,5 +525,51 @@ WHERE upper(last_name) LIKE '%SON%'
 ORDER BY first_name ASC;
 
 28. Create a list of categories and the number of films for each category. 
+# name, no_films_in_category
+'Action', '64'
+'Animation', '66'
+'Children', '60'
+'Classics', '57'
+'Comedy', '58'
+'Documentary', '68'
+'Drama', '62'
+'Family', '69'
+'Foreign', '73'
+'Games', '61'
+'Horror', '56'
+'Music', '51'
+'New', '63'
+'Sci-Fi', '61'
+'Sports', '74'
+'Travel', '57'
+
+WITH count_films as (
+SELECT t2.category_id, count(t1.film_id) as no_films_in_category FROM film t1
+JOIN film_category t2
+ON t1.film_id = t2.film_id
+GROUP BY t2.category_id)
+
+SELECT t4.name, t3.no_films_in_category
+FROM count_films t3
+LEFT JOIN category t4
+ON t3.category_id = t4.category_id;
 
 29. Create a list of actors and the number of movies by each actor. 
+199 rows returned. A selecton of the rows are below:
+# actor_name, number_of_films_in
+'PENELOPE GUINESS', '19'
+'NICK WAHLBERG', '25'
+'ED CHASE', '22'
+'JENNIFER DAVIS', '22'
+'JOHNNY LOLLOBRIGIDA', '29'
+'BETTE NICHOLSON', '20'
+'GRACE MOSTEL', '30'
+'MATTHEW JOHANSSON', '20'
+'JOE SWANK', '25'
+'CHRISTIAN GABLE', '22'
+
+SELECT concat_ws(" ", t1.first_name, t1.last_name) as actor_name, count(t2.film_id) as number_of_films_in
+FROM actor t1
+LEFT JOIN film_actor t2
+ON t1.actor_id = t2.actor_id
+GROUP BY actor_name;
