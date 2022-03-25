@@ -1,14 +1,23 @@
 1.	Using COUNT, get the number of cities in the USA.
-4079
+'274'
+
+SELECT count(ID) FROM city
+WHERE CountryCode = 'USA'
+
 2.	Find out what the population and average life expectancy for people in Argentina (ARG) is.
 Argentina population = 37032000
 Argentina life expectancy = 75.1
+
+SELECT Population, LifeExpectancy FROM country
+WHERE Code = 'ARG';
+
 3.	Using IS NOT NULL, ORDER BY, LIMIT, what country has the highest life expectancy?
 Andorra – 83.5
 SELECT * FROM COUNTRY
 WHERE LifeExpectancy IS NOT NULL
 ORDER BY LifeExpectancy DESC
 LIMIT 1
+
 4.
 Madrid
 USE world;
